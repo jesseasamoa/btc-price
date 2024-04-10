@@ -23,7 +23,7 @@ pipeline {
                 echo "Testing.."
                 sh '''
                 source venv/bin/activate
-                python3 get-btc-price.py
+                python3 add.py
                 '''
             }
         }
