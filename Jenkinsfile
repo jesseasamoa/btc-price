@@ -1,17 +1,19 @@
 pipeline {
     agent { 
         node {
-            label 'python-cloud'
+            label 'docker-agent-alpine'
         }
     }
     triggers {
-        pollSCM('* * * * *')
+        pollSCM('*/4 * * * *')
     }
     stages {
         stage('Build') {
             steps {
                 echo "Building.."
                 sh '''
+                python3 -m venv venv
+                source venv/bin/activate
                 pip install pandas
                 '''
             }
@@ -20,6 +22,7 @@ pipeline {
             steps {
                 echo "Testing.."
                 sh '''
+                source venv/bin/activate
                 python3 get-btc-price.py
                 '''
             }
